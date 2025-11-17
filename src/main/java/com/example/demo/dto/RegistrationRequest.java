@@ -53,6 +53,10 @@ public class RegistrationRequest {
     private String education3;
     private String collegeName2;
     private String collegeName3;
+    private String sibling2;
+    private String sibling3;
+    private String sibling2info;
+    private String sibling3info;
 
     // Getters and Setters
     public String getProfileFor() {
@@ -409,5 +413,37 @@ public class RegistrationRequest {
 
     public void setCollegeName3(String collegeName3) {
         this.collegeName3 = collegeName3;
+    }
+
+    public String getSibling2() {
+        return sibling2;
+    }
+
+    public void setSibling2(String sibling2) {
+        this.sibling2 = sibling2;
+    }
+
+    public String getSibling3() {
+        return sibling3;
+    }
+
+    public void setSibling3(String sibling3) {
+        this.sibling3 = sibling3;
+    }
+
+    public String getSibling2info() {
+        return sibling2info;
+    }
+
+    public void setSibling2info(String sibling2info) {
+        this.sibling2info = sibling2info;
+    }
+
+    public String getSibling3info() {
+        return sibling3info;
+    }
+
+    public void setSibling3info(String sibling3info) {
+        this.sibling3info = sibling3info;
     }
 }

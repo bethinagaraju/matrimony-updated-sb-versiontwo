@@ -65,6 +65,10 @@ public class RegistrationFormService {
         form.setEducation3(request.getEducation3());
         form.setCollegeName2(request.getCollegeName2());
         form.setCollegeName3(request.getCollegeName3());
+        form.setSibling2(request.getSibling2());
+        form.setSibling3(request.getSibling3());
+        form.setSibling2info(request.getSibling2info());
+        form.setSibling3info(request.getSibling3info());
 
         // Save images
         if (request.getImage1() != null && !request.getImage1().isEmpty()) {
