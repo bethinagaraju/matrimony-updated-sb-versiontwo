@@ -19,14 +19,16 @@ public class RegistrationForm {
     // Mandatory fields
     private String profileFor;
     private String firstName;
+
+    // Adding optional salary field
+    private String salary;
     private String lastName;
     private String gender;
     private LocalDate dateOfBirth;
     private String email;
     private String areaCode;
     private String phoneNumber;
-    private String placeOfBirthCity;
-    private String placeOfBirthState;
+    
     private String height;
     private String country;
     private String city;
@@ -146,21 +148,7 @@ public class RegistrationForm {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPlaceOfBirthCity() {
-        return placeOfBirthCity;
-    }
 
-    public void setPlaceOfBirthCity(String placeOfBirthCity) {
-        this.placeOfBirthCity = placeOfBirthCity;
-    }
-
-    public String getPlaceOfBirthState() {
-        return placeOfBirthState;
-    }
-
-    public void setPlaceOfBirthState(String placeOfBirthState) {
-        this.placeOfBirthState = placeOfBirthState;
-    }
 
     public String getHeight() {
         return height;
@@ -467,4 +455,13 @@ public class RegistrationForm {
     public void setSibling3info(String sibling3info) {
         this.sibling3info = sibling3info;
     }
+
+    public String getSalary() {
+        return salary;
+    }
+    
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
 }
+    

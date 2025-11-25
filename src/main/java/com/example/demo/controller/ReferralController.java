@@ -111,4 +111,18 @@ public class ReferralController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReferral(@PathVariable Long id) {
+        try {
+            boolean deleted = referralService.deleteReferral(id);
+            if (deleted) {
+                return ResponseEntity.ok("Referral deleted successfully. ID: " + id);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
 }

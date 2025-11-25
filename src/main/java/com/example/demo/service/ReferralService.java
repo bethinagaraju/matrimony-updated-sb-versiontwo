@@ -103,4 +103,18 @@ public class ReferralService {
 
         return referralRepository.save(referral);
     }
+
+    public boolean deleteReferral(Long id) {
+        Optional<Referral> optionalReferral = referralRepository.findById(id);
+        if (optionalReferral.isEmpty()) {
+            return false;
+        }
+        // delete any notes associated with this referral first (if repository supports cascading you may skip)
+        List<ReferralNotes> notes = referralNotesRepository.findByReferralId(id);
+        if (notes != null && !notes.isEmpty()) {
+            referralNotesRepository.deleteAll(notes);
+        }
+        referralRepository.deleteById(id);
+        return true;
+    }
 }
