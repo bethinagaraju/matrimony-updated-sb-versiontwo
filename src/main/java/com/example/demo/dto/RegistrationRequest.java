@@ -18,6 +18,7 @@ public class RegistrationRequest {
     private String email;
     private String areaCode;
     private String phoneNumber;
+    private String placeOfBirthCity;
   
 
     private String height;
@@ -48,6 +49,7 @@ public class RegistrationRequest {
     private String siblingDetails;
     private String rasi;
     private String gothram;
+    private String nakshatram;
     private MultipartFile image3;
     private MultipartFile image4;
     private MultipartFile image5;
@@ -128,13 +130,13 @@ public class RegistrationRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    // public String getPlaceOfBirthCity() {
-    //     return placeOfBirthCity;
-    // }
+    public String getPlaceOfBirthCity() {
+        return placeOfBirthCity;
+    }
 
-    // public void setPlaceOfBirthCity(String placeOfBirthCity) {
-    //     this.placeOfBirthCity = placeOfBirthCity;
-    // }
+    public void setPlaceOfBirthCity(String placeOfBirthCity) {
+        this.placeOfBirthCity = placeOfBirthCity;
+    }
 
 
 
@@ -346,6 +348,14 @@ public class RegistrationRequest {
 
     public void setGothram(String gothram) {
         this.gothram = gothram;
+    }
+
+    public String getNakshatram() {
+        return nakshatram;
+    }
+
+    public void setNakshatram(String nakshatram) {
+        this.nakshatram = nakshatram;
     }
 
     public MultipartFile getImage3() {

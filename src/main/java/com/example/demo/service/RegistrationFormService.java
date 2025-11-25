@@ -2,10 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.RegistrationRequest;
 import com.example.demo.entity.RegistrationForm;
+import com.example.demo.entity.RegistrationFormNotes;
+import com.example.demo.repository.RegistrationFormNotesRepository;
 import com.example.demo.repository.RegistrationFormRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ public class RegistrationFormService {
 
     @Autowired
     private RegistrationFormRepository registrationFormRepository;
+
+    @Autowired
+    private RegistrationFormNotesRepository registrationFormNotesRepository;
 
     @Autowired
     private SftpFileUploadService sftpFileUploadService;
@@ -32,6 +36,7 @@ public class RegistrationFormService {
         form.setEmail(request.getEmail());
         form.setAreaCode(request.getAreaCode());
         form.setPhoneNumber(request.getPhoneNumber());
+        form.setPlaceOfBirthCity(request.getPlaceOfBirthCity());
         form.setSalary(request.getSalary());
         form.setHeight(request.getHeight());
         form.setCountry(request.getCountry());
@@ -59,6 +64,7 @@ public class RegistrationFormService {
         form.setSiblingDetails(request.getSiblingDetails());
         form.setRasi(request.getRasi());
         form.setGothram(request.getGothram());
+        form.setNakshatram(request.getNakshatram());
         form.setPricecharging(request.getPricecharging());
         form.setEducation2(request.getEducation2());
         form.setEducation3(request.getEducation3());
@@ -114,6 +120,9 @@ public class RegistrationFormService {
         }
         if (request.getPhoneNumber() == null || request.getPhoneNumber().isEmpty()) {
             throw new IllegalArgumentException("Phone Number is mandatory");
+        }
+        if (request.getPlaceOfBirthCity() == null || request.getPlaceOfBirthCity().isEmpty()) {
+            throw new IllegalArgumentException("Place of Birth City is mandatory");
         }
         if (request.getHeight() == null || request.getHeight().isEmpty()) {
             throw new IllegalArgumentException("Height is mandatory");
@@ -209,6 +218,7 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
     form.setEmail(request.getEmail());
     form.setAreaCode(request.getAreaCode());
     form.setPhoneNumber(request.getPhoneNumber());
+    form.setPlaceOfBirthCity(request.getPlaceOfBirthCity());
     form.setSalary(request.getSalary());
     form.setHeight(request.getHeight());
     form.setCountry(request.getCountry());
@@ -235,6 +245,7 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
     form.setSiblingDetails(request.getSiblingDetails());
     form.setRasi(request.getRasi());
     form.setGothram(request.getGothram());
+    form.setNakshatram(request.getNakshatram());
     form.setPricecharging(request.getPricecharging());
     form.setEducation2(request.getEducation2());
     form.setEducation3(request.getEducation3());
@@ -298,6 +309,9 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
         }
         if (request.getPhoneNumber() != null && !request.getPhoneNumber().isEmpty()) {
             form.setPhoneNumber(request.getPhoneNumber());
+        }
+        if (request.getPlaceOfBirthCity() != null && !request.getPlaceOfBirthCity().isEmpty()) {
+            form.setPlaceOfBirthCity(request.getPlaceOfBirthCity());
         }
         if (request.getHeight() != null && !request.getHeight().isEmpty()) {
             form.setHeight(request.getHeight());
@@ -372,6 +386,9 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
         if (request.getGothram() != null && !request.getGothram().isEmpty()) {
             form.setGothram(request.getGothram());
         }
+        if (request.getNakshatram() != null && !request.getNakshatram().isEmpty()) {
+            form.setNakshatram(request.getNakshatram());
+        }
         if (request.getPricecharging() != null && !request.getPricecharging().isEmpty()) {
             form.setPricecharging(request.getPricecharging());
         }
@@ -431,6 +448,9 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
                 break;
             case "dateofbirth":
                 form.setDateOfBirth(java.time.LocalDate.parse(fieldValue));
+                break;
+            case "placeofbirthcity":
+                form.setPlaceOfBirthCity(fieldValue);
                 break;
             case "email":
                 form.setEmail(fieldValue);
@@ -513,6 +533,9 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
             case "gothram":
                 form.setGothram(fieldValue);
                 break;
+            case "nakshatram":
+                form.setNakshatram(fieldValue);
+                break;
             case "pricecharging":
                 form.setPricecharging(fieldValue);
                 break;
@@ -553,6 +576,30 @@ public RegistrationForm updateRegistration(Long id, RegistrationRequest request)
             return false;
         }
         registrationFormRepository.deleteById(id);
+        return true;
+    }
+
+    public RegistrationFormNotes addNote(Long registrationFormId, String noteText, String createdBy) {
+        RegistrationForm form = registrationFormRepository.findById(registrationFormId).orElse(null);
+        if (form == null) {
+            throw new IllegalArgumentException("Registration form not found");
+        }
+        RegistrationFormNotes note = new RegistrationFormNotes();
+        note.setRegistrationForm(form);
+        note.setNoteText(noteText);
+        note.setCreatedBy(createdBy);
+        return registrationFormNotesRepository.save(note);
+    }
+
+    public java.util.List<RegistrationFormNotes> getNotesByRegistrationFormId(Long registrationFormId) {
+        return registrationFormNotesRepository.findByRegistrationFormId(registrationFormId);
+    }
+
+    public boolean deleteNote(Long noteId) {
+        if (!registrationFormNotesRepository.existsById(noteId)) {
+            return false;
+        }
+        registrationFormNotesRepository.deleteById(noteId);
         return true;
     }
 }

@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.RegistrationRequest;
 import com.example.demo.entity.RegistrationForm;
 import com.example.demo.service.RegistrationFormService;
+import com.example.demo.entity.RegistrationFormNotes;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -120,6 +122,47 @@ public ResponseEntity<?> updateRegistrationForm(@PathVariable Long id, @ModelAtt
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/forms/{id}/notes")
+    public ResponseEntity<?> addNote(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        try {
+            String noteText = request.get("noteText");
+            String createdBy = request.get("createdBy");
+            if (noteText == null || createdBy == null) {
+                return ResponseEntity.badRequest().body("noteText and createdBy are required");
+            }
+            RegistrationFormNotes note = registrationFormService.addNote(id, noteText, createdBy);
+            return ResponseEntity.ok(note);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/forms/{id}/notes")
+    public ResponseEntity<?> getNotes(@PathVariable Long id) {
+        try {
+            java.util.List<RegistrationFormNotes> notes = registrationFormService.getNotesByRegistrationFormId(id);
+            return ResponseEntity.ok(notes);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/forms/notes/{noteId}")
+    public ResponseEntity<?> deleteNote(@PathVariable Long noteId) {
+        try {
+            boolean deleted = registrationFormService.deleteNote(noteId);
+            if (deleted) {
+                return ResponseEntity.ok("Note deleted successfully. ID: " + noteId);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
 }

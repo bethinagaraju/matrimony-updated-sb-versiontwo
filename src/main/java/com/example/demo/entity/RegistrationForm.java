@@ -28,6 +28,7 @@ public class RegistrationForm {
     private String email;
     private String areaCode;
     private String phoneNumber;
+    private String placeOfBirthCity;
     
     private String height;
     private String country;
@@ -57,6 +58,7 @@ public class RegistrationForm {
     private String siblingDetails;
     private String rasi;
     private String gothram;
+    private String nakshatram;
     private String image3Path;
     private String image4Path;
     private String image5Path;
@@ -146,6 +148,14 @@ public class RegistrationForm {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPlaceOfBirthCity() {
+        return placeOfBirthCity;
+    }
+
+    public void setPlaceOfBirthCity(String placeOfBirthCity) {
+        this.placeOfBirthCity = placeOfBirthCity;
     }
 
 
@@ -358,6 +368,14 @@ public class RegistrationForm {
 
     public void setGothram(String gothram) {
         this.gothram = gothram;
+    }
+
+    public String getNakshatram() {
+        return nakshatram;
+    }
+
+    public void setNakshatram(String nakshatram) {
+        this.nakshatram = nakshatram;
     }
 
     public String getImage3Path() {
